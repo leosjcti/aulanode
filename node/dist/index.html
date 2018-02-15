@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Cadastro de Nomes</h1>
+        <div class="row">
+            <div class="col-6">
+
+                <input type="text" id="texto" class="form-control"
+                    style="display:inline; vertical-align: middle; width: auto;">
+                
+                <button id="botao" class="btn btn-primary" >
+                    Enviar
+                    <i class="fa fa-check"></i>
+                </button>
+            </div>
+        </div>
+
+        <hr>
+        <h1 style="margin-top: 40px;"> Lista de Nomes </h1>
+
+        <div class="row">
+            <div class="col-6">
+                <ul class="list-group" id="lista"></ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        //Garante que vai ser executado logo após a execução de toda a página
+        window.onload = () => {
+            const lista = document.querySelector('#lista');
+            const botao = document.querySelector('#botao');
+            const texto = document.querySelector('#texto');
+
+            botao.addEventListener('click', create);
+            lista.addEventListener('click', del);
+
+            read();
+        }
+        
+        //Propriedade data do HTML5 consegue enviar dados do elemento
+        function templateLi(id, nome){
+            return `
+                <li class="list-group-item">${nome}
+                    <i class="btn btn-danger delete fa fa-trash"
+                        style="float: right; margin-left: 5px"
+                        data-id="${id}" 
+                        ></i>
+                </li>
+            `;
+        }
+
+
+        function read() {
+            //Zera a Lista quando chega na função read
+            lista.innerHTML = '';
+            
+            //Faz uma conexão get ajax na rota read para pegar os dadops
+            axios.get('/read')
+            .then((response) => {
+                console.log(response);
+                
+                response.data.forEach(element => {
+                    //lista.innerHTML += `<li class="list-group-item">${element.name}</li>` 
+                    lista.innerHTML += templateLi(element.id, element.name); 
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+
+        
+        function create() {
+
+            const name = texto.value;
+
+            axios.post('/create', {name})
+            .then((response) => {
+                console.log(response);
+                lista.innerHTML += templateLi(response.data[0], name);
+                                
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+            
+            read();
+        }   
+
+        function edit() {
+            
+        }   
+
+        function update() {
+            
+        }   
+
+        function del(element) {
+            console.log(element);
+            
+            //Procura se na lista de classes do target tem a classe delete
+            if(element.target.classList.contains('delete')){
+                //Recupera o data do html passado
+                const id = element.target.dataset.id;
+
+                axios.delete(`/delete/${id}`)
+                .then((response) => {
+                    console.log(response);
+                    if(response.status == 200){
+                        lista.removeChild(element.path[1]);
+                    }
+                                    
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
+        }   
+
+
+    </script>
+
+</body>
+</html>
