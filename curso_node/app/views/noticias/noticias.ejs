@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+	<html lang="pt-br">
+		<head>
+			<meta charset="utf-8"/>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		</head>
+	<body>
+		<h1>Noticias</h1>
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+				
+					<table>
+						<tr>
+							<th>Id</th>
+							<th>Titulo</th>
+							<th>Noticia</th>
+						</tr>
+					
+						<% for(var i=0; i < noticias.length; i++) { %>
+							<tr>
+								<td><%=noticias[i].id_noticia %></td>
+								<td><%=noticias[i].titulo %></td>
+								<td><%=noticias[i].noticia %></td>
+							</tr>
+							
+					<% } %>
+
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>
