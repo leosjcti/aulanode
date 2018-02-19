@@ -1,18 +1,17 @@
-module.exports = function(app){
-    
-    app.get('/noticias', function(req, res){
-        var mysql = require('mysql');
-        var conn = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'db_node'
-        });
+//var db = require('../../config/db');
 
+module.exports = function(application){
+       
+    application.get('/noticias', function(req, res){
+        
+        //Executa a função retornada no arquivo db.js.
+        var conn = application.config.db();
+        var noticiasModel = application.app.models.noticiasModel;
 
-        conn.query('select * from noticias', function(error, result){
+        noticiasModel.getNoticias(conn, function(error, result){
             res.render('noticias/noticias', {noticias: result});
         });
     });
+  
 };
 

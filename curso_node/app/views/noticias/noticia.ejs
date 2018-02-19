@@ -2,11 +2,32 @@
 	<html lang="pt-br">
 		<head>
 			<meta charset="utf-8"/>
-			<title>Portal de notícias</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta http-equiv="X-UA-Compatible" content="ie=edge">
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 		</head>
 	<body>
-
-		<h1>Notícia</h1>
+		<div class="container">
+				<h2>Noticia</h2>
+			<div class="row">
+				<div class="col-12">
+				
+					<table class="table">
+						<tr>
+							<th>Id</th>
+							<th>Titulo</th>
+							<th>Noticia</th>
+						</tr>
+							<tr>
+								<td><%=noticia[0].id_noticia %></td>
+								<td><%=noticia[0].titulo %></td>
+								<td><%=noticia[0].noticia %></td>
+							</tr>
+					</table>
+				</div>
+			</div>
+		</div>
 
 	</body>
 </html>
