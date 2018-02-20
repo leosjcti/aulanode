@@ -6,9 +6,10 @@ module.exports = function(application){
         
         //Executa a função retornada no arquivo db.js.
         var connection = application.config.db();
-        var noticiasModel = application.app.models.noticiasModel;
+        var noticiasDAO = new application.app.models.NoticiasDAO(connection); 
+        
 
-        noticiasModel.getNoticias(connection, function(error, result){
+        noticiasDAO.getNoticias(function(error, result){
             res.render('noticias/noticias', {noticias: result});
         });
     });
